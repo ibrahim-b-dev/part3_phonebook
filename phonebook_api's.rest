@@ -1,1 +1,8 @@
-http://localhost:3001/api/persons/20
+### READ (GET)
+GET http://localhost:3001/api/persons
+
+### READ (GET by ID)
+GET http://localhost:3001/api/persons/2
+
+### DELETE (DELETE)
+DELETE http://localhost:3001/api/persons/2
