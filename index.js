@@ -66,11 +66,35 @@ const generateRandomId = () => {
 };
 
 app.post("/api/persons", (request, response) => {
-  const person = request.body;
-  person.id = generateRandomId();
+  const body = request.body;
+  
+  if (!body.name) {
+    return response.status(400).json({
+      error: "name is missing",
+    });
+  }
 
+  if (!body.number) {
+    return response.status(400).json({
+      error: "number is missing",
+    });
+  }
+
+  const nameFound = persons.find(p => p.name === body.name);
+  
+  if (nameFound) {
+    return response.status(409).json({
+      error: "name must be unique"
+    })
+  }
+
+  const person = {
+    id: generateRandomId(),
+    name: body.name,
+    number: body.number
+  }
+  
   persons = persons.concat(person);
-
   response.json(person);
 });
 

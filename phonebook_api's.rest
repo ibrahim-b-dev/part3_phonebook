@@ -7,11 +7,41 @@ GET http://localhost:3001/api/persons/2
 ### DELETE (DELETE)
 DELETE http://localhost:3001/api/persons/2
 
+### READ NOTFOUND(GET by ID)
+GET http://localhost:3001/api/persons/2
+
 ### CREATE (POST)
 POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
+  "name": "Ibrahim Dev",
+  "number": "0123-456-789"
+}
+
+### CREATE INVALID(POST)
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
   "namee": "Ibrahim Dev",
+  "number": "0123-456-789"
+}
+
+### CREATE INVALID(POST)
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+  "name": "Ibrahim Dev",
+  "numbere": "0123-456-789"
+}
+
+### CREATE DUPLICATED(POST)
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+  "name": "Ibrahim Dev",
   "number": "0123-456-789"
 }
