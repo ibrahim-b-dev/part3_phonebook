@@ -24,8 +24,16 @@ let persons = [
   },
 ];
 
-app.get("/", (request, response) => {
-  response.send("<h1>PhoneBook</h1>");
+app.get("/info", (request, response) => {
+  const currentDate = new Date();
+  console.log(currentDate.toString());
+
+  const infoTemplate = `
+    <p>Phonebook has info for ${persons.length} people</p>
+    <p>${currentDate}</p>
+  `;
+
+  response.send(infoTemplate);
 });
 
 app.get("/api/persons", (request, response) => {
