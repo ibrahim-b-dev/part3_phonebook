@@ -1,7 +1,16 @@
 const express = require("express");
+const morgan = require("morgan");
 const app = express();
-
 app.use(express.json());
+
+morgan.token('body', (request) => {
+  return request.body && Object.keys(request.body).length 
+    ? JSON.stringify(request.body) 
+    : 'No body';
+})
+
+// app.use(morgan("tiny"));
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 
 let persons = [
   {
@@ -25,6 +34,16 @@ let persons = [
     number: "39-23-6423122",
   },
 ];
+
+app.head("/", (request, response) => {
+  response.set("X-Custom-Header", "CustomHeaderValue");
+  response.set(
+    "X-Purpose",
+    "Return the status code and response headers without body content."
+  );
+
+  response.status(200).end();
+});
 
 app.get("/info", (request, response) => {
   const currentDate = new Date();
@@ -67,7 +86,7 @@ const generateRandomId = () => {
 
 app.post("/api/persons", (request, response) => {
   const body = request.body;
-  
+
   if (!body.name) {
     return response.status(400).json({
       error: "name is missing",
@@ -80,23 +99,29 @@ app.post("/api/persons", (request, response) => {
     });
   }
 
-  const nameFound = persons.find(p => p.name === body.name);
-  
+  const nameFound = persons.find((p) => p.name === body.name);
+
   if (nameFound) {
     return response.status(409).json({
-      error: "name must be unique"
-    })
+      error: "name must be unique",
+    });
   }
 
   const person = {
     id: generateRandomId(),
     name: body.name,
-    number: body.number
-  }
-  
+    number: body.number,
+  };
+
   persons = persons.concat(person);
   response.json(person);
 });
+
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: 'unknown endpoint' })
+}
+
+app.use(unknownEndpoint)
 
 const PORT = 3001;
 app.listen(PORT, () => {

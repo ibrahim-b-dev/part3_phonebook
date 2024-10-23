@@ -45,3 +45,6 @@ Content-Type: application/json
   "name": "Ibrahim Dev",
   "number": "0123-456-789"
 }
+
+### HEAD REQUEST
+HEAD http://localhost:3001/
