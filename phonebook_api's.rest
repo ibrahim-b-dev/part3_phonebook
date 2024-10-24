@@ -48,3 +48,6 @@ Content-Type: application/json
 
 ### HEAD REQUEST
 HEAD http://localhost:3001/
+
+### GET UNKNOWN
+GET http://localhost:3001/known

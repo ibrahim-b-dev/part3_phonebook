@@ -1,16 +1,7 @@
 const express = require("express");
+const cors = require("cors");
 const morgan = require("morgan");
 const app = express();
-app.use(express.json());
-
-morgan.token('body', (request) => {
-  return request.body && Object.keys(request.body).length 
-    ? JSON.stringify(request.body) 
-    : 'No body';
-})
-
-// app.use(morgan("tiny"));
-app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 
 let persons = [
   {
@@ -34,6 +25,19 @@ let persons = [
     number: "39-23-6423122",
   },
 ];
+
+morgan.token("body", (request) => {
+  return request.body && Object.keys(request.body).length
+    ? JSON.stringify(request.body)
+    : "No body";
+});
+
+app.use(cors());
+app.use(express.json());
+// app.use(morgan("tiny"));
+app.use(
+  morgan(":method :url :status :res[content-length] - :response-time ms :body")
+);
 
 app.head("/", (request, response) => {
   response.set("X-Custom-Header", "CustomHeaderValue");
@@ -118,10 +122,10 @@ app.post("/api/persons", (request, response) => {
 });
 
 const unknownEndpoint = (request, response) => {
-  response.status(404).send({ error: 'unknown endpoint' })
-}
+  response.status(404).send({ error: "unknown endpoint" });
+};
 
-app.use(unknownEndpoint)
+app.use(unknownEndpoint);
 
 const PORT = 3001;
 app.listen(PORT, () => {
