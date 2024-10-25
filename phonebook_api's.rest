@@ -2,7 +2,7 @@
 GET http://localhost:3001/api/persons
 
 ### READ (GET by ID)
-GET http://localhost:3001/api/persons/2
+GET http://localhost:3001/api/persons/671bceac1affbb3ff80c2319
 
 ### DELETE (DELETE)
 DELETE http://localhost:3001/api/persons/2
@@ -16,7 +16,7 @@ Content-Type: application/json
 
 {
   "name": "Ibrahim Dev",
-  "number": "0123-456-789"
+  "numbere": "0123-456-789"
 }
 
 ### CREATE INVALID(POST)
